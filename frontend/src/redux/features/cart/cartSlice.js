@@ -14,14 +14,14 @@ const cartSlice = createSlice({
             const existingItem = state.cartItems.find(item => item._id === action.payload._id);
             if(!existingItem){
                 state.cartItems.push(action.payload)
-               
- Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Product Added to the Cart",
-  showConfirmButton: false,
-  timer: 1500
-});
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Product Added to the Cart",
+                    showConfirmButton: false,
+                    timer: 1500
+                  });
+
             } else{
              
                
