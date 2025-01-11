@@ -5,6 +5,8 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 import CartPage from "../pages/books/CartPage";
 
+import CheckoutPage from "../pages/books/CheckoutPage";
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -15,7 +17,8 @@ const router = createBrowserRouter([
             { path: "/about", element: <h1>About</h1>},
             { path: "/login", element: <Login/>},   
             { path: "/register", element: <Register/>},
-            { path: "/cart", element: <CartPage/>}
+            { path: "/cart", element: <CartPage/>},
+            { path: "/checkout", element: <CheckoutPage/>}
         ]
      
     }
