@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import Bookcard from '../books/Bookcard';
-
+import BookCard from '../books/Bookcard';
+// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+// import required modules
 import { Pagination, Navigation } from 'swiper/modules';
 
+// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
-
-const category = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"];
+const categories = ["Choose a genre", "Business", "Fiction", "Horror", "Adventure"]
 
 const TopSellers = () => {
-
-    const [books, setBooks] = useState([]);
+    
     const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
 
-    useEffect(() => {
-      fetch('books.json')
-       .then(response => response.json())
-       .then(data => setBooks(data))
-    }, [])
+   const {data: books = []} = useFetchAllBooksQuery();
+   
+  
 
-    const filteredBooks = selectedCategory === "Choose a genre" ? books: books.filter(book => book.category === selectedCategory.toLowerCase());
+const filteredBooks = selectedCategory === "Choose a genre" ? books: books.filter(book => book.category === selectedCategory.toLowerCase());
 
   return (
     <div className='py-10'>
@@ -34,7 +34,7 @@ const TopSellers = () => {
             <select onChange={(e) => setSelectedCategory(e.target.value)}
             name="category" id="category" className='border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none'>
                 {
-                    category.map((genre, index) => (
+                    categories.map((genre, index) => (
                         <option key={index} value={genre}>{genre}</option>
                     ))
                 }
@@ -71,7 +71,7 @@ const TopSellers = () => {
                    {
                        filteredBooks.length > 0 && filteredBooks.map((book, index) => (
                             <SwiperSlide key={index}>
-                                <Bookcard book={book}/>
+                                <BookCard book={book}/>
                             </SwiperSlide>
                    
                         ))
