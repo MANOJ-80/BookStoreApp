@@ -1,33 +1,70 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
-import { Link } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
+import Swal from'sweetalert2';
+import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 
 const CheckoutPage = () => {
-  const cartItems = useSelector(state => state.cart.cartItems)
-  const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2)
-  const {currentUser} = useAuth();
+    const cartItems = useSelector(state => state.cart.cartItems);
+    const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
+    const {  currentUser} = useAuth()
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm()
 
-  const { register, handleSubmit, formState: { errors } } = useForm()
-  const [isChecked, setIsChecked] = useState(false)
+    const [createOrder, {isLoading, error}] = useCreateOrderMutation();
+    const navigate =  useNavigate()
 
-  const onSubmit = (data) => {
-    const newOrder = {
-      name: data.name,
-      email: currentUser?.email,
-      address: {
-        city: data.city,
-        country: data.country,
-        state: data.state,
-        zipcode: data.zipcode
-      },
-      phone: data.phone,
-      productIds: cartItems.map(item => item?._id),
-      totalPrice: totalPrice
+    const [isChecked, setIsChecked] = useState(false)
+    const onSubmit = async (data) => {
+     
+        const newOrder = {
+            name: data.name,
+            email: currentUser?.email,
+            address: {
+                city: data.city,
+                country: data.country,
+                state: data.state,
+                zipcode: data.zipcode
+        
+            },
+            phone: data.phone,
+            productIds: cartItems.map(item => item?._id),
+            totalPrice: totalPrice,
+        }
+        
+        try {
+            await createOrder(newOrder).unwrap();
+            Swal.fire({
+                title: "Confirmed Order",
+                text: "Your order placed successfully!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, It's Okay!"
+              });
+              navigate("/orders")
+        } catch (error) {
+          Swal.fire({
+            title: "Error!",
+            text: "Failed to place an order. Please try again.",
+            icon: "error",
+            confirmButtonText: "Okay"
+          });
+        }
+        
     }
-    console.log(newOrder)
-  }
+
+    if(isLoading) return <div>Loading....</div>
+    
+
 
   return (
     <section className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
