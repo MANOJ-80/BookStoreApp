@@ -38,7 +38,7 @@ const Navbar = () => {
     logout();
     setIsDropdownOpen(false);
   };
-
+   //py-16 px-6 bg-gradient-to-b from-blue-50 via-white to-gray-100 rounded-lg shadow-lg
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
       <nav className="max-w-screen-2xl mx-auto px-4 py-4">
