@@ -9,6 +9,8 @@ import CheckoutPage from "../pages/books/CheckoutPage";
 import SingleBook from "../pages/books/SingleBook";
 import PrivateRoute from "./PrivateRoute";
 import OrderPage from "../pages/books/OrderPage";
+import AdminRoute from "./AdminRoute";
+import AdminLogin from "../components/AdminLogin";
 
 const router = createBrowserRouter([
     {
@@ -22,11 +24,31 @@ const router = createBrowserRouter([
             { path: "/register", element: <Register/>},
             { path: "/cart", element: <CartPage/>},
             { path: "/checkout", element: <PrivateRoute> <CheckoutPage/> </PrivateRoute>},
-            { path: "/books/:id", element: <SingleBook/>}
+            { path: "/books/:id", element: <SingleBook/>},
+        ]},
+            {
+                path: "/admin",
+                element: <AdminLogin/>
+              
+            },
+            
+            {   path: "/dashboard",
+                element: <AdminRoute><div>Admin Dashboard</div></AdminRoute>,
+                children: [{
+                   path:'',
+                   element: <div>dashboard home</div>
+            },
+               { path:"add-new-book",element: <div>add new book</div>},
+               { path:"manage-books",element: <div>Manage Books</div>},
+               { path:"edit-book/:id",element: <div>edit book</div>}
+               
+
 
         ]
      
     }
+ 
+   
 ]);
 
 export default router;
