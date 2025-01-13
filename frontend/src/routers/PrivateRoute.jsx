@@ -15,4 +15,4 @@ const PrivateRoute = ({children}) => {
     return <Navigate to="/login" replace/>
 }
 
-export default PrivateRoute
+export default PrivateRoute 
