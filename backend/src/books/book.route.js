@@ -13,7 +13,7 @@ router.post("/create-book",  verifyAdminToken,postABook)
 router.get("/", getAllBooks);
 
 // single book endpoint
-router.get("/:id", verifyAdminToken,getSingleBook);
+router.get("/:id",getSingleBook);
 
 // update a book endpoint
 router.put("/edit/:id",verifyAdminToken, UpdateBook);

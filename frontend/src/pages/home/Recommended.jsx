@@ -43,7 +43,7 @@ const Recommended = () => {
           No recommendations available at the moment. Check back later!
         </p>
       )}
-    </div>
+    </div>    
   );
 };
 
