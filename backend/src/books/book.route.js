@@ -10,7 +10,7 @@ const router =  express.Router();
 router.post("/create-book",  verifyAdminToken,postABook)
 
 // get all books
-router.get("/",verifyAdminToken, getAllBooks);
+router.get("/", getAllBooks);
 
 // single book endpoint
 router.get("/:id", verifyAdminToken,getSingleBook);
